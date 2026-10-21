@@ -115,3 +115,27 @@ No, la distancia no esta cerca del limite, las columnas que parecen ser son el c
 Para pensar. Si solo pudieran arreglar un tipo de error, ¿cuál elegirían y por qué? ¿Lo arreglarían cambiando el modelo, los datos o las reglas del negocio?
 
 Cambiariamos talvez los datos, dando mas ejemplos de los casos pero siento que podría ser lo de mandar dorn en vez de moto ya que perder un equipo como un dron y pude salir mas caro que equivocarse con otros medios.
+
+## Actividad 4 - Qué columnas usa realmente el modelo?
+Predigan. Antes de ver nada, ordenen las catorce columnas de la más importante a la menos importante para elegir el medio. Marquen las que creen que el modelo no usa.
+
+peso, hora de salida, distancia, clima, zona de destino, volumen, largo, acnho, alto, fragil, refirgerado, valor, trafico y prioridad.
+Las de refrigerado, fragil, prioridad, valor y trafico.
+
+Preguntas.
+
+**¿Cuáles son las cuatro columnas más importantes? ¿Coinciden con las primeras preguntas del árbol del paso 8? ¿Y con su predicción?**
+
+Distancia, volumen, clima y refrigerado, y con el arbol si coinciden, solo la columna de refrigerado no, y nop, no coinciden con mi predicción solo algunas
+
+**¿Qué columna, al quitarla, baja más la exactitud? ¿Cuáles no la cambian nada?**
+
+La distancia, y las que no son por ejemplo la de ancho, largo, alto, trafico y zona de destino
+
+**La zona de destino tiene importancia cero, pero en la actividad 1 vieron que el dron nunca va al centro. ¿Cómo puede ser que el modelo no use la zona y, aun así, la plataforma nunca mande un dron al centro?**
+
+porque esas son reglas de negocio, no pasan por el modelo para la predicción simplemente eso nunca va a passar por reglas de negocio entonces no hace falta que lo revise el modelo
+
+Para pensar. La app le pide a la persona catorce datos. Si el modelo no usa algunos, ¿deberían dejar de pedirlos? ¿Hay razones para pedir un dato que el modelo no usa?
+Son necesarios ya que no lo analiza el modelo pero hay reglas de negocio que ocupan esas metricas que se piensan omitir, lo cual harian que dieran malas predicciones el modelo de cual medio de transporte llevar.
+
