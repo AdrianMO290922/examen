@@ -139,3 +139,36 @@ porque esas son reglas de negocio, no pasan por el modelo para la predicción si
 Para pensar. La app le pide a la persona catorce datos. Si el modelo no usa algunos, ¿deberían dejar de pedirlos? ¿Hay razones para pedir un dato que el modelo no usa?
 Son necesarios ya que no lo analiza el modelo pero hay reglas de negocio que ocupan esas metricas que se piensan omitir, lo cual harian que dieran malas predicciones el modelo de cual medio de transporte llevar.
 
+## Actividad 5 - La minoría son de los drones, Hay que balancear el dataset?
+
+Parte A — Pensar antes de tocar los datos
+Respondan antes de escribir código:
+
+**¿Qué exactitud tendría un «modelo» que nunca dice dron y siempre acierta todo lo demás? ¿Y uno que siempre dice moto? ¿Qué les dice eso sobre usar la exactitud para juzgar un dataset desbalanceado? ¿Qué medidas del paso 7 usarían en su lugar?**
+
+No sería exacto ya que hay especificaciones donde si conviene mandar un dron y es como si lo igoraras y no estaria correcto para el negocio omitir un medio con el cual cuentan y con el cual se tienen reglas y condiciones para mandarlo sobre otros, y si solo dice moto, peor ya que ni da abertura a agregar unos donde la moto ni si quiera pueda con la carga completa de los paquetes, y nos quiere decir que siempre debe de estar balanceado ya que sino estará dando predicciones mal, y no exactas y el margen de error sera mayor, y usaria del paso 7, las de classifcation_report, el recall de drones, f1, la precision del dron
+
+**¿Por qué hay tan pocos drones? ¿Es un error de los datos o refleja cómo funciona la empresa? ¿Cambia eso la decisión de balancear?**
+
+Puede que sea por el tipico tipo de paquetes que maneja la empresa, y refleja como funciona la empresa en realidad, entonces no se debe de balancear, ya que sino le dirias al modelo que el dron es tan comun como una camioneta y empezará a sugerirlo mas seguido en paquetes que talvez no son los adecuados
+
+Si deciden balancear, ¿se balancea antes o después de separar los datos de entrenamiento y de prueba? ¿Se balancean también los datos de prueba? Justifiquen las dos respuestas antes de experimentar.
+
+Se hace después, los datos de prueba no se balancean, esto es porque si balanceas pueden caer una copia del mismo caso en la misma categoria ya sea de entrenamiento o de prueba y esto hace que la prueba salga inflada, y la prueba no se balancea porque es algo que debe de verse como lo que es en el mundo real donde los drones son pocos y debe de reflejarlo, por eso son de prueba.
+
+Parte B — Probar estrategias
+Propongan y prueben al menos tres formas de balancear. No les decimos cuáles; piensen en estas ideas generales y decidan cómo llevarlas a código:
+
+````
+ python actividad5.py
+                      estrategia  envios_entreno  exactitud  precision_dron  recall_dron  veces_predice_dron  sugerencias_imposibles
+                   sin balancear            8000      0.921           0.839        0.905                 205                      31
+          quitar (undersampling)            3032      0.898           0.889        0.932                 199                      29
+          repetir (oversampling)           14652      0.902           0.766        1.000                 248                      36
+                   drones nuevos            9942      0.900           0.722        1.000                 263                      56
+           class_weight=balanced            8000      0.903           0.766        1.000                 248                      35
+TRAMPA: repetir antes de separar           10880      0.920           0.923        0.989                 975                      59
+       TRAMPA: prueba balanceada            3032      0.900           0.967        0.932                 183                       6
+drones reales en la prueba: 190
+
+````
