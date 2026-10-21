@@ -56,3 +56,62 @@ cambio.
 
 La razón principal es por el peso, refreigeracion y además el volumen, todas estas son las que hacen que los paqutes hayan sido enviados
 por camioneta a pesar de la distancia.
+
+**Para pensar. Si les dieran solo el CSV, sin las reglas, ¿podrían reconstruir las reglas del negocio a partir de los datos? ¿Cuáles sí y cuáles no? ¿Qué riesgo hay en dejar que un modelo «descubra» las reglas en lugar de escribirlas a mano?**
+
+Por ejemplo lo de la distancias y el peso de los medios de transporte pequeños ya que son un poco evidentes, pero por ejempolo con la camioneta
+varian mucho y talvez podria llegar a variar mas sin saber exacto su limite, el riesgo es que como las reglas no van de acuerdo al negocio sino a 
+un dataset, es que algunos no hayan llegado a sus limites y acortaremos estos, y otras por ejemplo cuando aparezcan casos externos al dataset, que
+es lo que va a hacer, es lo que principalmente tendria riesgo.
+
+## Actividad 2 - La hora y dron
+
+**Predigan.** 
+
+¿Cuántos drones creen que salen a las 3:00? ¿Qué porcentaje de los envíos creen que sale de noche (antes de las 6 o desde las 21)?
+
+Unos 4 talvez, 20%
+
+Preguntas.
+
+**¿En qué horas no hay ni un solo dron? ¿Coincide exactamente con la regla?**
+
+Si, a partir de las 21hrs ya no hay drones hasta las 6, y si coincide con la regla de que solo hay drones de las 6 hasta las 20:59
+
+**¿Cuántos envíos de noche hay, comparados con los de día? ¿Qué consecuencia tiene eso para lo que el modelo puede aprender sobre la noche?**
+
+No hay muchos, bajan bastante la cantidad de entregas por la noche, el modelo aprende que no hay mucha demanda por la noche, entonces solo evaluara que tipo de paquetes son los que se envian a esa hora, segun las estadisticas tambien la camioneta es la mas usada estos casos.
+
+**Entre las 20:00 y las 21:00 las bicicletas casi desaparecen y las motos aumentan. Busquen en el README.md qué lo explica.**
+
+es porque las bicicletas y dorenes reciben penalizaciones
+
+**Un árbol solo pregunta «¿la hora es menor o igual que X?». ¿Por qué le cuesta representar «de noche»? ¿Cuántas preguntas sobre la hora necesitaría como mínimo?**
+
+Porque los arboles de decision solo es o una u otra y necesitamos saber condiciones de ambos, o es de dia o de noche, como son dos segmentos para un arbol de decisioon es complicado sin hacer mas flujos de los que parecerian, entonces necesita dos preguntas como minimo
+
+**Para pensar.** Sin mirar los ejercicios de arriba, diseñen una columna nueva que le facilite al árbol entender la noche. Expliquen cómo la calcularían a partir de las columnas que ya existen y cómo comprobarían, con un número, que de verdad ayudó. Si les da tiempo, háganlo.
+
+Conviene hacer una columna booleana preguntando si es de noche por ejemplo es_noche, 0 no, 1 si, con eso simplificamos el flujo y ya con una decision sabemos y arreglamos
+
+## Actividad 3 -Anatomía de los errores
+
+Predigan. ¿Qué confusión creen que será la más frecuente? ¿El modelo confundirá alguna vez una bicicleta con una camioneta?
+
+Yo digo que la mas frecuente puede ser entre moto y bicicleta, no creo que haya bicileta con camioneta porque siento que abarcan caracteristicas muy diferentes
+
+**¿Cuántos errores hay y cuáles son las tres confusiones más frecuentes? ¿Son entre medios parecidos o muy distintos? ¿Qué les dice eso?**
+
+Hay 158 errores en total y las mas frecuentes son moto con bicicleta, camioneta con moto, y moto con dron, aon parecidos, y es que las reglas son parecidas por ser muy cercanos en las reglas, ya sea de tamaño o condiciones
+
+**Revisen los envíos que eran moto y el modelo mandó a dron. ¿Cuántos son de noche? ¿Cuáles corregirían las reglas del negocio y cuáles no? ¿Qué tienen en común los que no?**
+
+Son 29, las reglas de negocio eran 26 y 3 no, los que no tienen en comun la zona, el clima,  el trafico.
+
+**Revisen los que eran moto y el modelo mandó a bicicleta. ¿Están cerca del límite de 7 km? Si no es la distancia, busquen qué columnas los distinguen de las bicicletas que el modelo sí acertó.**
+
+No, la distancia no esta cerca del limite, las columnas que parecen ser son el clima, la prioridad
+
+Para pensar. Si solo pudieran arreglar un tipo de error, ¿cuál elegirían y por qué? ¿Lo arreglarían cambiando el modelo, los datos o las reglas del negocio?
+
+Cambiariamos talvez los datos, dando mas ejemplos de los casos pero siento que podría ser lo de mandar dorn en vez de moto ya que perder un equipo como un dron y pude salir mas caro que equivocarse con otros medios.
