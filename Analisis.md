@@ -172,3 +172,19 @@ TRAMPA: repetir antes de separar           10880      0.920           0.923     
 drones reales en la prueba: 190
 
 ````
+Parte C - Interpretar
+**¿Qué pasó con el recall del dron y qué pasó con su precision? ¿Por qué una sube cuando la otra baja?**
+
+Al poner el modelo a encontrar más drones, el recall sube a 1000, pero la precision baja de 0.839 a 0.722. Para encontrar todos los drones reales, el modelo etiqueta como dron también los casos dudosos, y varios de ellos son errores. Es un intercambio: una sube porque la otra baja.
+
+**¿Alguna estrategia dejó al modelo con muchos menos datos de entrenamiento? ¿Qué se pierde con eso?**
+
+Solo 3032 envíos de entrenamiento contra los 8000 que eran, se pierde información de las clases grandes y la exactitud total baja a 0.898, aun asi su precision y su recall del dron son buenos, y eso muestra que no siempre hay que tirar datos, pero casi siempre se paga algo.
+
+**Si dos estrategias distintas les dieron números casi iguales para el dron, expliquen por qué son, en el fondo, la misma idea.**
+
+Repetir y class_weight dieron exactamente la misma precision de 0.766, el recall 1000 y casi las mismas veces que predice dron 248. En el fondo las dos hacen que un error en un dron cuente más durante el entrenamiento. Repetir lo hace copiando filas, y class_weight lo hace con un peso. El árbol termina con una pérdida casi equivalente.
+
+**En el paso 15, el motivo de la respuesta dice «confianza 84 %». Después de balancear, ¿ese porcentaje sigue significando lo mismo? (Piensen en qué proporción de drones vio el modelo al entrenar y qué proporción hay en la realidad.)**
+
+Ya no significa lo mismo, un modelo entrenado con drones al 25% estima probabilidades como si el dron fuera mucho más común de lo que es. Un 84% de dron sale inflado frente a la realidad, donde solo el 9.5% de los envíos son de dron. Antes de balancear, el porcentaje reflejaba más o menos la proporción real. Después, ya no es una probabilidad calibrada, y habría que recalibrarla antes de mostrársela a una persona.
